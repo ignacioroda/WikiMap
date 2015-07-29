@@ -1,0 +1,8 @@
+/*****************************
+*
+* MOBACK SETUP
+*
+******************************/
+
+var moBack_Application_key = "[your moback app key]";
+var moBack_Development_key = "[your moback dev key]";

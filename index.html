@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+        <link href="css/main.css"  rel="stylesheet" type="text/css" />
+        <link href="css/ol.css"  rel="stylesheet" type="text/css" />
+
+        <script src="config.txt" type="text/javascript"></script>
+        <script src="js/jquery-1.11.2.min.js" type="text/javascript"></script>   
+
+
+        
+        <script src="js/ol.js" type="text/javascript"></script>
+        
+        <script src="js/moback.min.js" type="text/javascript"></script>
+        <script src="js/userdata.js" type="text/javascript"></script>
+        <script src="js/wiki.js" type="text/javascript"></script>
+        <script src="js/map.js" type="text/javascript"></script>
+
+        
+    </head>
+    <body id="body">
+        <div id="map" class="map"></div>
+        <div id="location" class="map" onclick="setFromMobincubeCenter()"><img id="mylocation" src="./images/mylocation.png"/></div>
+        <div id="favfilter" class="map" onclick="setFavoritesMode()"><img id="favfilter_button" src="./images/fav_in.png"/></div>
+        <div id="modal" onclick="hideDialog();"></div>
+        <div id="article">
+            
+            <div id="article_title">title</div>
+            <div id="article_content">content</div>
+            <div id="article_close" onclick="hideDialog();"><img id="close_button" src="./images/close.png"/></div>
+            <div id="yes_fav" class='isfav' onclick="favorite(false);"><img id="close_button" src="./images/yes_fav.png"/></div>
+            <div id="no_fav" class='isfav' onclick="favorite(true);"><img id="close_button" src="./images/no_fav.png"/></div>
+        </div>
+       
+
+
+        <script type="text/javascript">
+
+            
+            
+            
+            
+
+            $(function () {
+                
+                
+                $("#article_close").on("tap",function(){
+                    hideDialog();
+                });
+                
+                $("#location").on("tap",function(){
+                    setFromMobincubeCenter();
+                });
+                
+                mobincube("javascript/setValues('{location}','{language}','{instance}','{osVersion}','{ISOCountry}' , '{locality}' , '{IP}' )");
+                
+                //setValues('0, 0' , 'en' , 'abc' , '4.2' , 'us' , 'San Francisco' , '208.80.152.201');
+               
+            });
+
+            /**
+             * This method invokes an action on the native side of the app built with Mobincube}
+             */
+            function mobincube(action) {
+                
+                window.location = "mobincube://" + action;
+            }
+
+            var lang;
+            function setValues( gps , language , instance , os , country , locality , IP ) {
+                var iso = language.substring( 0 , 2 );
+                
+                switch( iso ){
+                    case 'en':
+                    case 'es':
+                    case 'fr':
+                    case 'it':
+                    case 'ar':
+                    case 'de':
+                    case 'nl':
+                    case 'pl':
+                    case 'ru':
+                    case 'ceb':
+                    case 'sv':
+                    case 'vi':
+                    case 'war':
+                        lang = iso;
+                        break;
+                    default:
+                        lang = 'en';
+                        break;
+                }
+                
+               
+                
+                login( instance , lang , os , country , locality );
+                
+                var latlon = gps.split(",");
+                
+                var lat = Number(latlon[0]);
+                var lng = Number(latlon[1]);
+                
+                lat = lat || 0;
+                lng = lng || 0;
+                
+                
+                
+                if( lat === 0 && lng === 0 ){
+                    setMapFromIP( IP );
+                }else{
+                    setMap(lat, lng);
+                }
+                
+            }
+            
+            function setFromMobincubeCenter(){
+                mobincube( "javascript/setCenter('{location}')");
+                
+            }
+            
+            
+            
+            
+            var time;
+
+            function showDialog(title, text) {
+                var d = new Date();
+                time = d.getTime();
+                
+                $('#article_title').html(title);
+                $('#article_content').html(text);
+                $('#modal').css('display', 'inline');
+                $('#article').css('display', 'inline');
+            }
+            
+            function showDialogWithPage(title, text) {
+                
+                if( favs[ currentPageId.toString() ] !== undefined ){
+                    // Is favorite
+                    $('#yes_fav').css('display', 'inline');
+                    $('#no_fav').css('display', 'none');
+                }else{
+                    // Is not favorite
+                    $('#yes_fav').css('display', 'none');
+                    $('#no_fav').css('display', 'inline');
+                }
+                var d = new Date();
+                time = d.getTime();
+                
+                $('#article_title').html(title);
+                $('#article_content').html(text);
+                $('#modal').css('display', 'inline');
+                $('#article').css('display', 'inline');
+            }
+
+            function hideDialog() {
+                var d = new Date();
+                if( d.getTime() - time < 1000 )
+                    return;
+                
+                $('#modal').css('display', 'none');
+                $('#article').css('display', 'none');
+                
+                currentPageId = -1;
+            }
+
+
+
+            function type(obj) {
+                return Object.prototype.toString.call(obj).slice(8, -1);
+            }
+        </script>
+    </body>
+</html>

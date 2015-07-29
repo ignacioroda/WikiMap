@@ -1,0 +1,130 @@
+#body{
+    position: absolute;
+    margin-left: 0px;
+    margin-top: 0px;
+    width: 100%;
+    height: 100%;
+    
+    overflow: hidden;
+}
+
+#map {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: graytext;
+    height: 100%;
+    width: 100%;
+}
+
+#modal {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    
+    opacity: 0.7;
+}
+
+
+
+#article{
+    position: absolute;
+    display: none;
+    width: 90%;
+    max-height: 90%;
+    margin-left: 5%;
+    margin-top: 5%;
+    background-color: white;
+    border-radius: 10pt;
+    border-color: black;
+    border-width: 2pt;
+    border-style: solid;
+    
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#article_title{
+    position: relative;
+    width: 80%;
+    
+    margin-left: 5%;
+    margin-top: 2%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    
+    
+    font-size: 20pt;
+    color:#1F6DDB;
+}
+
+#article_content{
+    position: relative;
+    width: 90%;
+    
+    margin-left: 5%;
+    margin-top: 2%;
+    margin-bottom: 5%;
+}
+
+#close_button{
+    width: 24pt;
+    height: 24pt;
+}
+#article_close{
+   position: absolute;
+
+    
+
+    right:4pt;
+    top:4pt;
+}
+
+#article_close:hover{
+    cursor:pointer;
+}
+
+#location{
+    position: absolute;
+    right:6pt;
+    top:6pt;
+}
+
+#mylocation{
+    width: 40pt;
+    height: 40pt;
+}
+
+.option{
+    width: 90%;
+    margin-top: 8pt;
+    margin-bottom: 4pt;
+    font-size: 16pt;
+    padding: 10pt;
+    background-color: #E8E8E8;
+    border-radius: 5pt;
+}
+
+
+.isfav{
+   display: none;
+   position: absolute;
+   right:32pt;
+   top:4pt;
+}
+
+#favfilter{
+    display: none;
+    position: absolute;
+    right:48pt;
+    top:6pt;
+}
+
+#favfilter_button{
+    width: 40pt;
+    height: 40pt;
+}
